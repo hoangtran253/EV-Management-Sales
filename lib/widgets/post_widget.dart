@@ -8,6 +8,7 @@ class PostWidget extends StatefulWidget {
   final String imageUrl;
   final String postTime;
   final String avatarUrl;
+  final VoidCallback? onCommentTap;
 
   const PostWidget({
     super.key,
@@ -16,6 +17,7 @@ class PostWidget extends StatefulWidget {
     required this.imageUrl,
     required this.postTime,
     required this.avatarUrl,
+    this.onCommentTap,
   });
 
   @override
@@ -168,11 +170,14 @@ class _PostWidgetState extends State<PostWidget>
                   size: 26.sp,
                 ),
                 SizedBox(width: 15.w),
-                Image.asset('images/comment.webp', height: 26.h),
+                GestureDetector(
+                  onTap: widget.onCommentTap,
+                  child: Image.asset('images/comment.webp', height: 26.sp),
+                ),
                 SizedBox(width: 15.w),
-                Image.asset('images/send.jpg', height: 24.h),
+                Image.asset('images/send.jpg', height: 26.sp),
                 Spacer(),
-                Image.asset('images/save.png', height: 24.h),
+                Image.asset('images/save.png', height: 26.sp),
               ],
             ),
           ),

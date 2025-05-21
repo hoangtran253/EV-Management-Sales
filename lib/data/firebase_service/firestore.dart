@@ -15,7 +15,7 @@ class FirebaseFirestoreService {
         'email': email,
         'username': username,
         'bio': bio,
-        'avatarUrl': avatarUrl, // Lưu ảnh đại diện vào Firestore
+        'avatarUrl': avatarUrl, 
       });
     } catch (e) {
       print("Error creating user in Firestore: $e");

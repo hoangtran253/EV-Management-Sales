@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_instagram_clone/widgets/post_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_instagram_clone/widgets/comments_popup.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -84,6 +85,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 imageUrl: post['imageUrl'] ?? '',
                 avatarUrl: post['avatarUrl'] ?? '',
                 postTime: formattedTime,
+                onCommentTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) {
+                      // TODO: Replace with actual current user info
+                      final currentUsername = 'ActualUser';
+                      final currentUserImageUrl = '';
+
+                      return CommentsPopup(
+                        postId: snapshot.data!.docs[index].id,
+                        firestore: FirebaseFirestore.instance,
+                        currentUsername: currentUsername,
+                        currentUserImageUrl: currentUserImageUrl,
+                      );
+                    },
+                  );
+                },
               );
             },
           );
