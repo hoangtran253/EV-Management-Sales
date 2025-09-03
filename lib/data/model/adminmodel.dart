@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AdminService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Fetch all users
   Future<List<Map<String, dynamic>>> getAllUsers() async {
     try {
       final QuerySnapshot snapshot = await _firestore.collection('users').get();
@@ -17,7 +16,6 @@ class AdminService {
     }
   }
 
-  // Fetch all posts
   Future<List<Map<String, dynamic>>> getAllPosts() async {
     try {
       final QuerySnapshot snapshot = await _firestore.collection('posts').get();
@@ -31,13 +29,9 @@ class AdminService {
     }
   }
 
-  // Delete user
   Future<void> deleteUser(String uid) async {
     try {
-      // Delete user document
       await _firestore.collection('users').doc(uid).delete();
-
-      // Find and delete user's posts
       final QuerySnapshot userPosts =
           await _firestore
               .collection('posts')
@@ -48,20 +42,16 @@ class AdminService {
         await _firestore.collection('posts').doc(doc.id).delete();
       }
 
-      // Note: This doesn't delete the actual Firebase Auth account
-      // You would need to use Firebase Admin SDK or Cloud Functions for that
     } catch (e) {
       print('Error deleting user: $e');
       throw Exception('Failed to delete user');
     }
   }
 
-  // Delete post
   Future<void> deletePost(String postId) async {
     try {
       await _firestore.collection('posts').doc(postId).delete();
 
-      // Also delete any comments related to this post
       final QuerySnapshot comments =
           await _firestore
               .collection('comments')
@@ -77,7 +67,6 @@ class AdminService {
     }
   }
 
-  // Update user
   Future<void> updateUserInfo({
     required String uid,
     String? username,
@@ -113,13 +102,11 @@ class AdminService {
     }
   }
 
-  // Get basic analytics
   Future<Map<String, dynamic>> getAnalytics() async {
     try {
       final userCount = await _firestore.collection('users').count().get();
       final postCount = await _firestore.collection('posts').count().get();
 
-      // Get posts from the last 7 days
       final DateTime sevenDaysAgo = DateTime.now().subtract(Duration(days: 7));
       final recentPosts =
           await _firestore

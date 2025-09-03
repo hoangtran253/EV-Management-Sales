@@ -33,7 +33,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
     _fetchUserData();
   }
 
-  // Lấy thông tin người dùng từ Firestore
   String? _avatarUrl;
 
   Future<void> _fetchUserData() async {
@@ -45,11 +44,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
     setState(() {
       _username = userData['username'];
-      _avatarUrl = userData['avatarUrl']; // Lấy avatar
+      _avatarUrl = userData['avatarUrl']; 
     });
   }
 
-  // Chọn ảnh từ thiết bị
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final picked = await picker.pickImage(source: ImageSource.gallery);
@@ -62,7 +60,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
     }
   }
 
-  // Tải ảnh lên Cloudinary
   Future<String?> uploadToCloudinary(Uint8List imageBytes) async {
     final uri = Uri.parse(
       'https://api.cloudinary.com/v1_1/$cloudName/image/upload',
@@ -90,7 +87,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
     }
   }
 
-  // Xử lý khi người dùng đăng bài
   Future<void> _handlePost() async {
     if (_imageData == null || _username == null) return;
     setState(() {
@@ -184,7 +180,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ),
               SizedBox(height: 16.h),
 
-              // Thông tin người dùng
               if (_username != null)
                 ListTile(
                   contentPadding: EdgeInsets.zero,
@@ -205,7 +200,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 ),
               SizedBox(height: 10.h),
 
-              // Caption
               TextField(
                 controller: _captionController,
                 maxLines: null,
@@ -222,7 +216,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ),
               SizedBox(height: 16.h),
 
-              // Nút đăng bài
               SizedBox(
                 width: double.infinity,
                 height: 45.h,
@@ -245,7 +238,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ),
               SizedBox(height: 24.h),
 
-              // Chọn ảnh
               Text(
                 "Ảnh từ thiết bị",
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),

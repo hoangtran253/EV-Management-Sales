@@ -14,7 +14,6 @@ class AuthWrapper extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        // Chưa có dữ liệu (đang loading)
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
@@ -24,10 +23,8 @@ class AuthWrapper extends StatelessWidget {
         final user = snapshot.data;
 
         if (user == null) {
-          return const AuthScreen(); // hoặc màn hình welcome
+          return const AuthScreen();
         }
-
-        // Kiểm tra quyền admin
         return FutureBuilder<bool>(
           future: AdminAuth().isUserAdmin(),
           builder: (context, snapshot) {
@@ -36,7 +33,6 @@ class AuthWrapper extends StatelessWidget {
                 body: Center(child: CircularProgressIndicator()),
               );
             }
-
             if (!snapshot.hasData) {
               return const Scaffold(
                 body: Center(child: Text('Error loading admin status')),

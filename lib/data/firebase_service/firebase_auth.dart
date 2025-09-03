@@ -36,7 +36,6 @@ class Authentication {
         throw exceptions('Password and Confirm Password must match.');
       }
 
-      // Tạo tài khoản
       final userCredential = await _auth.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
@@ -44,13 +43,12 @@ class Authentication {
 
       final uid = userCredential.user!.uid;
 
-      // Lưu người dùng vào Firestore
       await FirebaseFirestoreService().createUser(
         uid: uid,
         email: email,
         username: username,
         bio: bio,
-        avatarUrl: avatarUrl ?? '', // Lưu ảnh vào Firestore
+        avatarUrl: avatarUrl ?? '', 
       );
     } on FirebaseAuthException catch (e) {
       throw exceptions(e.message ?? 'Signup failed');

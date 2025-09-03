@@ -8,7 +8,6 @@ class CloudinaryService {
   static const String uploadPresetImage = 'instagram_image';
   static const String uploadPresetVideo = 'instagram_video';
 
-  // 📸 Upload ảnh (avatar, post, ...)
   static Future<String?> uploadImage(
     Uint8List imageBytes, {
     String folder = 'others',
@@ -47,7 +46,6 @@ class CloudinaryService {
     }
   }
 
-  // 🎥 Upload video (reels, story, ...)
   static Future<String?> uploadVideo(XFile videoFile) async {
     try {
       final uri = Uri.parse(

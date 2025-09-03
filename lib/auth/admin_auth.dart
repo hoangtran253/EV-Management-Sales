@@ -5,8 +5,6 @@ import 'package:flutter_instagram_clone/util/exception.dart';
 class AdminAuth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  /// Check if current user is admin based on field `isAdmin` in `users` collection
   Future<bool> isUserAdmin() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
@@ -18,7 +16,6 @@ class AdminAuth {
               .doc(user.uid)
               .get();
 
-      // Kiểm tra nếu document tồn tại và isAdmin == true
       if (doc.exists && doc.data()?['isAdmin'] == true) {
         return true;
       } else {
@@ -30,7 +27,6 @@ class AdminAuth {
     }
   }
 
-  /// Admin login check (đăng nhập và kiểm tra isAdmin trong users)
   Future<bool> adminLogin({
     required String email,
     required String password,
@@ -47,7 +43,6 @@ class AdminAuth {
     }
   }
 
-  /// Set user as admin (by updating isAdmin = true)
   Future<void> setAdmin(String uid) async {
     try {
       await _firestore.collection('users').doc(uid).update({'isAdmin': true});
@@ -56,7 +51,6 @@ class AdminAuth {
     }
   }
 
-  /// Revoke admin rights
   Future<void> removeAdmin(String uid) async {
     try {
       await _firestore.collection('users').doc(uid).update({'isAdmin': false});
